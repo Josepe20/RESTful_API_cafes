@@ -40,12 +40,14 @@ class Cafe(db.Model):
 
 @app.route("/")
 def home():
+    """This Home page"""
     return render_template("index.html")
     
 
 ## HTTP GET - Read Record
 @app.route("/random")
 def get_random_cafe():
+    """This function gives a random cafe"""
 
     cafes = db.session.query(Cafe).all()
     random_cafe = random.choice(cafes)
@@ -54,6 +56,7 @@ def get_random_cafe():
 
 @app.route("/all")
 def get_all_cafe():
+    """This function gives all cafes"""
 
     all_cafes = db.session.query(Cafe).all()
     # cafes = []
@@ -65,6 +68,7 @@ def get_all_cafe():
 
 @app.route("/search")
 def get_cafes_at_location():
+    """This function gives cafes at certain location"""
 
     query_location = request.args.get('loc')
     cafes = db.session.query(Cafe).all()
@@ -77,6 +81,8 @@ def get_cafes_at_location():
 ## HTTP POST - Create Record
 @app.route("/add", methods=['POST'])
 def post_new_cafe():
+    """This function Post new cafes"""
+
     api_key = request.args.get("api_key")
     if api_key == 'TopSecretAPIKey':
         try:
@@ -110,6 +116,8 @@ def post_new_cafe():
 ## HTTP PUT/PATCH - Update Record
 @app.route("/update-price/<int:cafe_id>", methods=['PATCH'])
 def update_cafe(cafe_id):
+    """This function update cafes by Patch method, that means only edit certain part or information"""
+
     new_coffee_price = request.args.get('new_price')
     cafe = db.session.query(Cafe).get(cafe_id)
     if cafe:
@@ -125,6 +133,7 @@ def update_cafe(cafe_id):
 ## HTTP DELETE - Delete Record
 @app.route("/report-closed/<int:cafe_id>", methods=['DELETE'])
 def delete_cafe(cafe_id):
+    """This function Delete specific cafe by id"""
 
     api_key = request.args.get("api_key")
     if api_key == "TopSecretAPIKey":
