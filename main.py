@@ -73,7 +73,7 @@ def get_cafes_at_location():
     query_location = request.args.get('loc')
     cafes = db.session.query(Cafe).all()
     cafes_at_location = [cafe.to_json_dict() for cafe in cafes if cafe.location == query_location]
-    if cafes_at_location != "":
+    if len(cafes_at_location) != 0:
         return jsonify(cafes=cafes_at_location)
     else:
         return jsonify(error={'Not found': "Sorry,we don't have a cafe at that location"})
